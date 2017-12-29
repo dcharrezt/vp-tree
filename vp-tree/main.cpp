@@ -29,11 +29,7 @@ struct Point {
     vector<FF> char_vector;
 };
 
-
 typedef vector<Point> points;
-
-
-
 
 vector<string> read_file(string pathFile);
 points training_Set(vector<string> &names);
@@ -52,7 +48,7 @@ void QueryPerformanceCounter( uint64_t* val )
 
 double m_distance( const Point& p1, const Point& p2 )
 {
-    float distance;
+    float distance = 0;
     for(auto i = 0; i<p1.char_vector.size(); i++){
         distance += abs(p1.char_vector[i] - p2.char_vector[i]);
     }
@@ -114,9 +110,26 @@ int main(int argc, char *argv[])
 
 
     VpTree<Point, m_distance> tree;
-    uint64_t start, end;
-    QueryPerformanceCounter( &start );
+
     tree.create( inputs );
+
+    Point point;
+
+    point.char_vector.push_back(253);
+    point.char_vector.push_back(2);
+    point.char_vector.push_back(113.82);
+    point.char_vector.push_back( 73.6262);
+    point.char_vector.push_back(5875.57);
+
+    vector<Point> results;
+    vector<double> distances;
+
+    tree.search( point, 8, &results, &distances );
+
+        for( int i = 0; i < results.size(); i++ ) {
+            cout << results[i].name << " -- " << distances[i] << endl;
+        }
+
 //    QueryPerformanceCounter( &end );
 //    printf("Create took %d\n", (int)(end-start));
 
@@ -170,6 +183,12 @@ vector<FF> vectorize(string n)
     v.push_back(image2.mean());
     v.push_back(sqrt(image2.variance()));
     v.push_back(image2.variance());
+
+//    for(auto i : v){
+//        cout << i << " ";
+//    }
+//    cout << endl;
+
 
     return v;
 }
