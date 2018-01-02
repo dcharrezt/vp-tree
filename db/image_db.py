@@ -14,7 +14,7 @@ path_1 = "1271/"
 path_2 = "1808/"
 
 # define the path
-currentDirectory = pathlib.Path(path_1)
+currentDirectory = pathlib.Path(path_2)
 
 # define the pattern
 currentPattern = "*.JPEG"
@@ -46,6 +46,14 @@ def primary_colours(x):
     km.fit(x)
     cc = km.cluster_centers_.copy()
     global c
+    
+    with open("imgs_features.csv", 'a') as w:
+        w.write(imgs[c] + "," + str(cc[0][0]) + "," + str(cc[0][1]) + "," + str(cc[0][2]) \
+                                + str(cc[1][0]) + "," + str(cc[1][1]) + "," + str(cc[1][2])\
+                                + str(cc[2][0]) + "," + str(cc[2][1]) + "," + str(cc[2][2])\
+                                + str(cc[3][0]) + "," + str(cc[3][1]) + "," + str(cc[3][2])\
+                                + str(cc[4][0]) + "," + str(cc[4][1]) + "," + str(cc[4][2]) + "\n")
+    w.close()
     c+=1
     print(c)
 #    print(cc)
@@ -53,8 +61,6 @@ def primary_colours(x):
     
 print("OK !!")
 features = [primary_colours(x) for x in flat_individual]
-
-with open 
 
 #for(i in features[0]):
 #	print("MS: " i)
